@@ -1,0 +1,64 @@
+@startuml
+!theme mars
+skinparam componentStyle uml2
+skinparam actorStyle awesome
+
+
+:Клиент: as CC
+:Менеджер: as MC
+:Аналитик: as AC 
+
+usecase "Login\nLogout\nSignup" as auth
+usecase "Просмотр\nконтента" as content
+
+CC -left-> auth
+CC -right-> content
+
+package Auth {
+[AuthAPI\nFlask] as AuthAPI
+database "AuthCache\nRedis" as AuthCache
+database "AuthDB\nPostgres" as AuthDB
+AuthAPI -> AuthCache
+AuthAPI -down-> AuthDB
+cloud {
+[OAuth2 Services] as oauth2
+}
+oauth2 -down-> AuthAPI
+oauth2 <-up- AuthAPI: Cведения о клиенте
+auth -> Auth
+}
+
+package Movies {
+[MoviesAPI\nFastAPI] as MoviesAPI
+database "Movies Storage\nElastic" as ES
+database "API Cache\nRedis" as redis
+MoviesAPI -down-> ES
+MoviesAPI -> redis
+}
+content -down-> MoviesAPI
+MoviesAPI -> AuthAPI: Проверка прав доступа
+
+package Admin {
+component "Admin panel\nDjango" as Django
+database "MoviesDB\nPostgres" as MoviesDB
+Django -> MoviesDB
+[ETL Movies] as ETL1
+ETL1 -up-> ES: Загрузка
+ETL1 <-down- MoviesDB: Выгрузка сведений\nо фильмах, персонах\nи жанрах
+MC -down-> Django: Создание и обновление\nконтента к фильмам
+}
+
+package UGC {
+[API UGC] as UGCAPI
+database "OLTP\nKafka" as OLTP
+UGCAPI -> OLTP
+[ETL UGC] as ETLUGC
+ETLUGC <-down- OLTP
+' note left of ETL_UGC : Перегрузка данных\nиз транзакционного хранилища\nв аналитическое
+database "OLAP\nClickhouse" as OLAP
+ETLUGC -> OLAP
+}
+content -> UGCAPI
+AC -> OLAP
+
+@enduml

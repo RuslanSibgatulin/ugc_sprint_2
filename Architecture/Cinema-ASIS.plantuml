@@ -1,0 +1,50 @@
+@startuml
+!theme vibrant
+skinparam componentStyle uml2
+skinparam actorStyle awesome
+actor Клиент as Client
+
+usecase auth as "Login\nLogout\nSignup"
+usecase "Просмотр контента" as watch
+
+Client -down-> auth
+Client -down-> watch
+
+package Auth {
+[FalskApp]
+database "AuthCache\nRedis" as AuthCache
+database "AuthDB\nPostgres" as AuthDB
+
+FalskApp -> AuthCache
+FalskApp -down-> AuthDB
+cloud {
+[OAuth2 Services] as oauth2
+}
+oauth2 -down-> FalskApp
+oauth2 <-up- FalskApp: Cведения о клиенте
+auth -> Auth
+}
+
+
+package Movies {
+[FastAPI] as MoviesAPI
+database "Movies Storage\nElastic" as ES
+database "API Cache\nRedis" as redis
+MoviesAPI -down-> ES
+MoviesAPI -> redis
+}
+watch -> Movies
+Movies -> Auth: Проверка прав доступа
+
+:Менеджер: as mgr
+package Admin {
+component "Admin panel\nDjango" as Django
+database "MoviesDB\nPostgres" as MoviesDB
+Django -> MoviesDB
+}
+
+mgr -down-> Django: Создание и обновление\nконтента к фильмам
+[ETL Movies] as ETL1
+ETL1 -> ES: Загрузка
+ETL1 <-down- MoviesDB: Выгрузка сведений\nо фильмах
+@enduml
