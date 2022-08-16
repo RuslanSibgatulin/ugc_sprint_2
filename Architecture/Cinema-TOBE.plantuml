@@ -18,22 +18,22 @@ package Auth {
 [AuthAPI\nFlask] as AuthAPI
 database "AuthCache\nRedis" as AuthCache
 database "AuthDB\nPostgres" as AuthDB
-AuthAPI -> AuthCache
-AuthAPI -down-> AuthDB
+AuthAPI <-> AuthCache
+AuthAPI <-down-> AuthDB
 cloud {
 [OAuth2 Services] as oauth2
 }
 oauth2 -down-> AuthAPI
 oauth2 <-up- AuthAPI: Cведения о клиенте
-auth -> Auth
+auth -> AuthAPI
 }
 
 package Movies {
 [MoviesAPI\nFastAPI] as MoviesAPI
 database "Movies Storage\nElastic" as ES
 database "API Cache\nRedis" as redis
-MoviesAPI -down-> ES
-MoviesAPI -> redis
+MoviesAPI <-down-> ES
+MoviesAPI <-> redis
 }
 content -down-> MoviesAPI
 MoviesAPI -> AuthAPI: Проверка прав доступа
@@ -41,7 +41,7 @@ MoviesAPI -> AuthAPI: Проверка прав доступа
 package Admin {
 component "Admin panel\nDjango" as Django
 database "MoviesDB\nPostgres" as MoviesDB
-Django -> MoviesDB
+Django <-> MoviesDB
 [ETL Movies] as ETL1
 ETL1 -up-> ES: Загрузка
 ETL1 <-down- MoviesDB: Выгрузка сведений\nо фильмах, персонах\nи жанрах

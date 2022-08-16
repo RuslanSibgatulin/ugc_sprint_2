@@ -1,0 +1,2 @@
+vertica_python==1.1.1
+pytest==6.2.5
