@@ -3,10 +3,11 @@ from typing import List
 from pydantic import BaseSettings
 
 
-class Settings(BaseSettings):
-    KAFKA_URI: List = ['localhost:9092']
+class Config(BaseSettings):
+    MOVIE_PROGRESS_TOPIC = "movie_progress"
+    KAFKA_URI: List = ["localhost:9092"]
     SECRET_KEY: str = "extra secret"
-    HASH_ALGORITHM: str = 'sha256'
+    HASH_ALGORITHM: str = "SHA-256"
 
 
-settings = Settings()
+config = Config()

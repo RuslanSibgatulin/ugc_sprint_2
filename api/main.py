@@ -1,17 +1,18 @@
 import uvicorn
+from db import kafka
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 
-from db import kafka
+from api.v1.progress import router
 
 app = FastAPI(
-    title='Kafka API',
-    docs_url='/api/openapi',
-    openapi_url='/api/openapi.json',
+    title="Kafka API",
+    docs_url="/api/openapi",
+    openapi_url="/api/openapi.json",
     default_response_class=ORJSONResponse,
 )
 
-# app.include_router(views.router, prefix="/api/v1")
+app.include_router(router, prefix="/api/v1")
 
 
 @app.on_event("startup")
