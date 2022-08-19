@@ -1,7 +1,7 @@
 import json
 import logging
 
-from config import config
+from core.config import config
 from db.kafka import KafkaHandler, get_kafka_handler
 from fastapi import Depends
 from models.progress import MovieProgress

@@ -1,0 +1,18 @@
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.9 as base
+
+COPY requirements /tmp/requirements
+RUN pip install --no-cache-dir -r /tmp/requirements/prod.txt
+
+WORKDIR /app
+
+FROM base as prod
+
+COPY ./api /app
+
+CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-c", "gunicorn.conf.py", "main:app"]
+
+FROM base as dev
+
+RUN pip install --no-cache-dir -r /tmp/requirements/dev.txt
+
+CMD ["uvicorn", "main:app", "--debug", "--reload", "--host", "0.0.0.0", "--port", "8888", "--log-level", "debug"]

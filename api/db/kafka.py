@@ -2,7 +2,7 @@ import asyncio
 from typing import Optional
 
 from aiokafka import AIOKafkaProducer
-from config import config
+from core.config import config
 
 
 class KafkaHandler:
@@ -18,6 +18,6 @@ kafka_handler: Optional[KafkaHandler] = None
 
 async def get_kafka_handler() -> KafkaHandler:
     loop = asyncio.get_event_loop()
-    kafka_producer = AIOKafkaProducer(loop=loop, bootstrap_servers=config.KAFKA_URI)
+    kafka_producer = AIOKafkaProducer(loop=loop, bootstrap_servers=config.kafka_uri)
     await kafka_producer.start()
     return KafkaHandler(kafka_producer)

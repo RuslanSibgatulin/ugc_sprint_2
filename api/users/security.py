@@ -1,5 +1,5 @@
 import jwt
-from config import config
+from core.config import config
 from fastapi import Security
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
