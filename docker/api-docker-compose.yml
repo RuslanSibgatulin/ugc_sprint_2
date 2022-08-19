@@ -1,0 +1,13 @@
+---
+version: '2'
+services:
+  ugcapp:
+    build:
+      context: ..
+      dockerfile: docker/dockerfiles/UgcAppDockerfile
+      target: prod
+    env_file: envs/prod
+    ports:
+      - 8000:8888
+    depends_on:
+      - broker

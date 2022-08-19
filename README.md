@@ -5,3 +5,5 @@
 Распределение по командам подготовит команда сопровождения. Куратор поделится с вами списками в Slack в канале #group_projects.
 
 Задания на спринт вы найдёте внутри тем.
+
+# DOCKER_BUILDKIT=1 docker-compose -f kafka-docker-compose.yml -f api-docker-compose.yml up --build --force-recreate
