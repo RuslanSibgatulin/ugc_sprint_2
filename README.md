@@ -24,10 +24,14 @@
     SECRET_KEY=extra secret
     HASH_ALGORITHM=SHA-256
 
-## Запуск компонентов системы
+## Запуск UGC API
 Перейти в каталог `docker`
     cd docker   
     DOCKER_BUILDKIT=1 docker-compose -f kafka-docker-compose.yml -f api-docker-compose.yml up --build --force-recreate
+
+## Запуск UGC API с OLAP
+
+    DOCKER_BUILDKIT=1 docker-compose -f kafka-docker-compose.yml -f api-docker-compose.yml -f ch-docker-compose.yml up --build --force-recreate
 
 ## Документация сервиса регистрации событий UGC доступна по ссылке
 - http://127.0.0.1:8000/api/openapi
