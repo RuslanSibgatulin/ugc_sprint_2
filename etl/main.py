@@ -3,26 +3,17 @@ import logging.config
 import traceback
 from typing import List, NamedTuple
 
-import clickhouse_client as chc
+import db.clickhouse_client as chc
 from config import settings
-from kafka_consumer import Consumer
-from models import ViewEvent
+from db.kafka_consumer import Consumer
+from models.models import ViewEvent
 
 
 def transform(data: List[NamedTuple]) -> List[ViewEvent]:
     out = []
     for i in data:
-        ids = str(i.key).split('+')
-        val = str(i.value).split('+')
-
-        obj = {
-            'user_id': ids[0],
-            'film_id': ids[1],
-            'viewed_frame': val[0],
-            'total_frames': 10800
-        }
         out.append(
-            ViewEvent.parse_obj(obj)
+            ViewEvent.parse_obj(i.value)
         )
 
     return out

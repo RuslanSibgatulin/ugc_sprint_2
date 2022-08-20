@@ -7,8 +7,8 @@
 [Ссылка на приватный репозиторий с командной работой.](https://github.com/RuslanSibgatulin/ugc_sprint_1)
 
 ## Используемые технологии
-- Код приложения на Python + aiohttp.
-- Транзакцилнной хранилище (OLTP) - Kafka.
+- Код приложения на Python + fastapi.
+- Транзакционное хранилище (OLTP) - Kafka.
 - Аналитическое хранилище (OLAP) - ClickHouse
 - Все компоненты системы запускаются через Docker-compose.
 
@@ -17,16 +17,20 @@
     git clone git@github.com:RuslanSibgatulin/ugc_sprint_1.git
 
 ## Подготовка окружения
-Подготовить .env файл с переменными окружения по шаблону docker/envs/example.sample и сохранить под именем docker/envs/prod.env.
-Для среды разработи создать файл docker/envs/dev.env, для тестов docker/envs/test.env
+Подготовить файл с переменными окружения и сохранить под именем docker/envs/prod.env.
+
+    KAFKA_HOST=broker
+    KAFKA_PORT=29092
+    SECRET_KEY=extra secret
+    HASH_ALGORITHM=SHA-256
 
 ## Запуск компонентов системы
 Перейти в каталог `docker`
-    cd docker
+    cd docker   
     DOCKER_BUILDKIT=1 docker-compose -f kafka-docker-compose.yml -f api-docker-compose.yml up --build --force-recreate
 
 ## Документация сервиса регистрации событий UGC доступна по ссылке
-- http://127.0.0.1:8888/apidocs/
+- http://127.0.0.1:8000/api/openapi
 
 
 # Команда

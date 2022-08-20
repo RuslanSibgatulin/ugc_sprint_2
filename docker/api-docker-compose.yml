@@ -6,8 +6,11 @@ services:
       context: ..
       dockerfile: docker/dockerfiles/UgcAppDockerfile
       target: prod
-    env_file: envs/prod
+    env_file: envs/prod.env
+    environment:
+      - WEBAPP_PORT=8888
     ports:
       - 8000:8888
     depends_on:
-      - broker
+      broker:
+        condition: service_healthy
