@@ -5,7 +5,6 @@ services:
     build:
       context: ..
       dockerfile: docker/dockerfiles/UgcAppDockerfile
-      target: prod
     env_file: envs/prod
     ports:
       - 8000:8888
