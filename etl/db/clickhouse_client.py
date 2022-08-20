@@ -1,8 +1,7 @@
 from clickhouse_driver import Client
-
-from backoff import backoff
 from config import settings
 
+from .backoff import backoff
 
 client = Client(host=settings.CLICKHOUSE_SERVER)
 

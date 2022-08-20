@@ -10,23 +10,23 @@ from models.models import ViewEvent
 
 
 def transform(data: List[NamedTuple]) -> List[ViewEvent]:
-    out = []
-    for i in data:
-        out.append(
-            ViewEvent.parse_obj(i.value)
-        )
-
-    return out
+    return [ViewEvent.parse_obj(i.value) for i in data]
 
 
 def load(data: List[ViewEvent]):
-    chc.insert_views(data)
+    logger.debug(data)
+    # chc.insert_views(data)
 
 
 def etl_loop():
+    logger.info(
+        'Listening topic %s on %s',
+        settings.KAFKA_TOPIC,
+        settings.kafka_uri
+    )
     views = Consumer(
         settings.KAFKA_TOPIC,
-        settings.KAFKA_BROKER
+        settings.kafka_uri
     )
     while True:
         try:
@@ -36,9 +36,10 @@ def etl_loop():
             )
             if data:
                 t_data = transform(data)
-                load(t_data)
+                logger.debug(t_data)
+                # load(t_data)
         except KeyboardInterrupt:
-            logger.info('ETL interrupted')
+            logger.info('Interrupted')
             break
         except Exception:
             logger.error(traceback.format_exc())
@@ -47,6 +48,6 @@ def etl_loop():
 if __name__ == "__main__":
     logging.config.fileConfig('logging.conf')
     logger = logging.getLogger('ETLUGC')
-    logging.info('Started')
+    logger.info('Started')
     etl_loop()
-    logging.info('Finished')
+    logger.info('Finished')

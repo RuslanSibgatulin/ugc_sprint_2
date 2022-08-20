@@ -1,7 +1,6 @@
-from dataclasses import Field
 from uuid import UUID
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class ViewEvent(BaseModel):

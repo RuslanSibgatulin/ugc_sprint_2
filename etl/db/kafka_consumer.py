@@ -1,8 +1,9 @@
+import json
 from typing import List, Union
 
 from kafka import KafkaConsumer
 
-from backoff import backoff
+from .backoff import backoff
 
 
 class Consumer:
@@ -18,7 +19,7 @@ class Consumer:
             bootstrap_servers=[self.server],
             auto_offset_reset='earliest',
             group_id='echo-messages-to-stdout',
-            value_deserializer=lambda v: v.decode('utf-8'),
+            value_deserializer=lambda v: json.loads(v.decode('utf-8')),
             key_deserializer=lambda k: k.decode('utf-8')
         )
 
