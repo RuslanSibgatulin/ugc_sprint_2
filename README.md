@@ -41,7 +41,6 @@
 
 
 ## Запуск UGC API и OLAP
-Перейти в каталог `docker`
 
     cd docker
     DOCKER_BUILDKIT=1 docker-compose -f kafka-docker-compose.yml -f ugc-docker-compose.yml -f ch-docker-compose.yml up --build --force-recreate

@@ -15,7 +15,6 @@ services:
     build:
       context: ..
       dockerfile: docker/dockerfiles/UgcAppDockerfile
-      target: prod
     env_file: envs/prod
     depends_on:
       broker:
