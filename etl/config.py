@@ -7,7 +7,7 @@ class ETLSettings(BaseSettings):
     BATCH_SIZE: int = 10
     READ_TIMEOUT: int = 1000
     CLICKHOUSE_SERVER: str = "127.0.0.1"
-    KAFKA_TOPIC: str = Field('movie_progress', env='MOVIE_PROGRESS_TOPIC')
+    KAFKA_TOPIC: str = Field('views', env='MOVIE_PROGRESS_TOPIC')
     KAFKA_HOST: str = "localhost"
     KAFKA_PORT: int = 9092
 

@@ -10,12 +10,19 @@ from models.models import ViewEvent
 
 
 def transform(data: List[NamedTuple]) -> List[ViewEvent]:
-    return [ViewEvent.parse_obj(i.value) for i in data]
+    out = []
+    for event in data:
+        obj = event.value | {"event_time": event.timestamp // 1000}
+        out.append(
+            ViewEvent.parse_obj(obj).dict(exclude={'total_time'})
+        )
+
+    return out
 
 
 def load(data: List[ViewEvent]):
     logger.debug(data)
-    # chc.insert_views(data)
+    chc.insert_views(data)
 
 
 def etl_loop():
@@ -36,8 +43,7 @@ def etl_loop():
             )
             if data:
                 t_data = transform(data)
-                logger.debug(t_data)
-                # load(t_data)
+                load(t_data)
         except KeyboardInterrupt:
             logger.info('Interrupted')
             break

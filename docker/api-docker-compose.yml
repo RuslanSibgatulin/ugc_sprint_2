@@ -16,7 +16,7 @@ services:
       context: ..
       dockerfile: docker/dockerfiles/UgcAppDockerfile
       target: prod
-    env_file: envs/prod.env
+    env_file: envs/prod
     depends_on:
       broker:
         condition: service_healthy
