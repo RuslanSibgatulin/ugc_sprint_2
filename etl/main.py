@@ -23,6 +23,7 @@ def transform(data: List[NamedTuple]) -> List[ViewEvent]:
 def load(data: List[ViewEvent]):
     logger.debug(data)
     chc.insert_views(data)
+    logger.info('Batch %s records loaded to OLAP', len(data))
 
 
 def etl_loop():

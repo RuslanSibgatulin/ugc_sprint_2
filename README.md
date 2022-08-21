@@ -17,21 +17,34 @@
     git clone git@github.com:RuslanSibgatulin/ugc_sprint_1.git
 
 ## Подготовка окружения
-Подготовить файл с переменными окружения и сохранить под именем docker/envs/prod.env.
+### Подготовить файл с переменными окружения и сохранить под именем `docker/envs/prod`:
 
     KAFKA_HOST=broker
     KAFKA_PORT=29092
-    SECRET_KEY=extra secret
+    SECRET_KEY=secret
     HASH_ALGORITHM=SHA-256
 
-## Запуск UGC API
+    WEBAPP_WORKERS_PER_CORE=1
+    WEBAPP_HOST=0.0.0.0
+    WEBAPP_PORT=8888
+    WEBAPP_LOG_LEVEL=debug
+
+
+### Подготовить файл с переменными окружения и сохранить под именем `docker/envs/etl`:
+
+    KAFKA_HOST=broker
+    KAFKA_PORT=29092
+    KAFKA_TOPIC=views
+    BATCH_SIZE=10
+    READ_TIMEOUT=1000
+    CLICKHOUSE_SERVER=clickhouse
+
+
+## Запуск UGC API и OLAP
 Перейти в каталог `docker`
-    cd docker   
-    DOCKER_BUILDKIT=1 docker-compose -f kafka-docker-compose.yml -f api-docker-compose.yml up --build --force-recreate
 
-## Запуск UGC API с OLAP
-
-    DOCKER_BUILDKIT=1 docker-compose -f kafka-docker-compose.yml -f api-docker-compose.yml -f ch-docker-compose.yml up --build --force-recreate
+    cd docker
+    DOCKER_BUILDKIT=1 docker-compose -f kafka-docker-compose.yml -f ugc-docker-compose.yml -f ch-docker-compose.yml up --build --force-recreate
 
 ## Документация сервиса регистрации событий UGC доступна по ссылке
 - http://127.0.0.1:8000/api/openapi

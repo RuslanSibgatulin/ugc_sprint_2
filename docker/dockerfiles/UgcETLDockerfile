@@ -1,0 +1,9 @@
+FROM python:3.9
+COPY requirements/etl.txt /tmp/requirements/etl.txt
+RUN pip install --no-cache-dir -r /tmp/requirements/etl.txt
+
+WORKDIR /app
+
+COPY ./etl /app
+
+CMD ["python", "main.py"]
