@@ -3,7 +3,7 @@ from models.progress import MovieProgress, MovieProgressBase
 from services.progress import ProgressService, get_progress_service
 from users.security import get_user
 
-router = APIRouter()
+router = APIRouter(tags=['Events'])
 
 
 @router.post("/progress")

@@ -6,7 +6,7 @@ from fastapi.responses import ORJSONResponse
 from api.v1.progress import router
 
 app = FastAPI(
-    title="Kafka API",
+    title="UGC API",
     docs_url="/api/openapi",
     openapi_url="/api/openapi.json",
     default_response_class=ORJSONResponse,
