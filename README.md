@@ -1,7 +1,7 @@
 # Сервис UGC - контент создаваемый пользователем. Проектная работа 8 спринта.
 [![Generic badge](https://img.shields.io/badge/Changelog-<COLOR>.svg)](./CHANGELOG.md)
 [![Generic badge](https://img.shields.io/badge/Our-Team-<COLOR>.svg)](#команда)
-
+[![Generic badge](https://img.shields.io/badge/Re-Search-<COLOR>.svg)](./olap_test/Readme.md)
 
 Этот сервис будет примимать события от других компонентов системы, сохраняя их в Kafka, и последующей передачей через ETL процесс в OLAP ClickHouse.
 [Ссылка на приватный репозиторий с командной работой.](https://github.com/RuslanSibgatulin/ugc_sprint_1)
