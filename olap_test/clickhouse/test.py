@@ -5,6 +5,13 @@ SQL_COUNT_ALL = "SELECT count(*) FROM ugc_data.user_movie_progress"
 SQL_COUNT = "SELECT uniqExact({field}) FROM ugc_data.user_movie_progress"
 SQL_AVG_PERCENT = "SELECT AVG(percent) FROM ugc_data.user_movie_progress"
 SQL_ANALYTIC = "SELECT uniqExact(movie_id, user_id) FROM ugc_data.user_movie_progress WHERE percent >= 0.600"
+SQL_LIMIT = "SELECT * FROM ugc_data.user_movie_progress LIMIT {limit}"
+
+
+@timer
+def get_limited_rows(limit: int):
+    movies = client.execute(SQL_LIMIT.format(limit=limit))
+    print(f"Selected movies: {len(movies)}")
 
 
 @timer
@@ -38,6 +45,9 @@ def get_popular():
 
 
 if __name__ == "__main__":
+    get_limited_rows(1000)
+    get_limited_rows(10000)
+    get_limited_rows(100000)
     get_count()  # Excecute time: 0.231 sec.
     get_uniq_movies_count()  # Excecute time: 0.66 sec.
     get_uniq_users_count()  # Excecute time: 0.998 sec.
