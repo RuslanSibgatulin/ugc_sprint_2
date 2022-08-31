@@ -6,7 +6,7 @@ from .backoff import backoff
 client = Client(host=settings.CLICKHOUSE_SERVER)
 
 
-@backoff('Clickhouse.insert')
+@backoff("Clickhouse.insert")
 def insert_views(data):
     """
     INSERT INTO ugc_data.user_movie_progress
