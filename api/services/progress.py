@@ -1,5 +1,6 @@
 import json
 import logging
+from functools import lru_cache
 
 from core.config import config
 from db.kafka import KafkaHandler, get_kafka_handler
@@ -19,6 +20,7 @@ class ProgressService:
         await self.storage.send(topic=config.MOVIE_PROGRESS_TOPIC, value=value, key=key)
 
 
+@lru_cache
 def get_progress_service(
     event_storage: KafkaHandler = Depends(get_kafka_handler),
 ) -> ProgressService:
