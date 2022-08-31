@@ -51,9 +51,7 @@ MC -down-> Django: Создание и обновление\nконтента к
 package UGC {
 [API UGC] as UGCAPI
 database "OLTP\nKafka" as OLTP
-database "UGC Storage\nMongoDB" as Mongo
 UGCAPI -> OLTP
-UGCAPI <-up-> Mongo
 [ETL UGC] as ETLUGC
 ETLUGC <-down- OLTP
 ' note left of ETL_UGC : Перегрузка данных\nиз транзакционного хранилища\nв аналитическое

@@ -1,0 +1,50 @@
+@startjson
+{
+"_id": "movie_UUID",
+"reviews": [
+{
+"author": "Mike",
+"user_id": "UUID",
+"time": "2022-08-28 09:00",
+"score": "8",
+"text": "Film review"
+},
+{
+"author": "Luna",
+"user_id": "UUID",
+"time": "2022-08-27 09:00",
+"score": "10",
+"text": "Film review",
+"likes": [
+    {   
+        "review_id": "review_id",
+        "user_id": "UUID",
+        "score": 1
+    }, 
+    {
+        "review_id": "review_id",
+        "user_id": "user_UUID_2",
+        "score": 9
+    }
+]
+}
+],
+"likes": [
+    {
+        "movie_id": "UUID",
+        "user_id": "UUID",
+        "score": 10
+    },
+    {
+        "movie_id": "UUID",
+        "user_id": "UUID",
+        "score": 5
+    },
+    {
+        "movie_id": "UUID",
+        "user_id": "UUID",
+        "score": 2
+    }
+]
+}
+@endjson

@@ -1,23 +1,27 @@
-# Сервис UGC - контент создаваемый пользователем. Проектная работа 8 спринта.
+# Сервис UGC - контент создаваемый пользователем. Проектная работа 9 спринта.
 [![Generic badge](https://img.shields.io/badge/Changelog-<COLOR>.svg)](./CHANGELOG.md)
 [![Generic badge](https://img.shields.io/badge/Our-Team-<COLOR>.svg)](#команда)
 [![Generic badge](https://img.shields.io/badge/Re-Search-<COLOR>.svg)](./olap_test/Readme.md)
 
-Этот сервис будет примимать события от других компонентов системы, сохраняя их в Kafka, и последующей передачей через ETL процесс в OLAP ClickHouse.
-[Ссылка на приватный репозиторий с командной работой.](https://github.com/RuslanSibgatulin/ugc_sprint_1)
+Этот сервис будет примимать события от других компонентов системы, сохраняя их в Kafka, и последующей передачей через ETL процесс в OLAP ClickHouse. А так же позволит регистрировать лайки пользователей, их закладки и рецензии на фильмы.
+[Ссылка на приватный репозиторий с командной работой.](https://github.com/RuslanSibgatulin/ugc_sprint_2)
 
-## Сравнение OLAP
-Перед реализацией проекта был проведен сравнительный [тест аналитичесих хранилищ](./olap_test/Readme.md), для выбора оптимального варианта.
+## Сравнение хранилищ
+Перед реализацией проекта были проведены сравнительные тесты 
+- [аналитичесих хранилищ](./olap_test/Readme.md)
+- [документоориентированной СУБД MongoDB](./mongodb_test/README.MD)
+
 
 ## Используемые технологии
 - Код приложения на Python + fastapi.
+- Хранилище BigData - MongoDB.
 - Транзакционное хранилище (OLTP) - Kafka.
 - Аналитическое хранилище (OLAP) - ClickHouse
 - Все компоненты системы запускаются через Docker-compose.
 
 # Запуск приложения
 ## Клонировать репозиторий
-    git clone git@github.com:RuslanSibgatulin/ugc_sprint_1.git
+    git clone git@github.com:RuslanSibgatulin/ugc_sprint_2.git
 
 ## Подготовка окружения
 ### Подготовить файл с переменными окружения и сохранить под именем `docker/envs/prod`:
