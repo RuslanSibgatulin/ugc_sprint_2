@@ -37,7 +37,7 @@ class BookmarkService:
         await collection.delete_one({"_id": bookmark_id, "user_id": user_id})
 
 
-@lru_cache
+@lru_cache()
 def get_bookmark_service(
     mongo_storage: AsyncIOMotorClient = Depends(get_mongo_client),
 ) -> BookmarkService:

@@ -56,7 +56,7 @@ class RatingService:
         return reviews
 
 
-@lru_cache
+@lru_cache()
 def get_rating_service(
     mongo_storage: AsyncIOMotorClient = Depends(get_mongo_client),
 ) -> RatingService:
