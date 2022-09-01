@@ -31,10 +31,14 @@ class RatingService:
     async def get_avg_movie_rating(self, movie_id: str) -> Optional[float]:
         collection = self.db[config.MONGO_MOVIE_LIKES_COLLECTION_NAME]
         pipeline = [{"$match": {"movie_id": movie_id}}, {"$group": {"_id": "_id", "avg_score": {"$avg": "$score"}}}]
+        results = []
         async for result in collection.aggregate(pipeline):
-            if result:
-                return round(result["avg_score"], 2)
-            return None
+            results.append(result)
+        if results:
+            rating = round(results[0]["avg_score"], 2)
+        else:
+            rating = None
+        return rating
 
     async def add_review(self, review: ReviewFull) -> None:
         rewiew_like = review.like

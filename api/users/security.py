@@ -21,6 +21,6 @@ async def get_user(user_credentials: HTTPAuthorizationCredentials = Security(BEA
             status_code=HTTPStatus.UNAUTHORIZED,
             detail="Invalid jwt token.",
         )
-    user_data = payload.get("sub")
+    user_data = payload["sub"]
     user_id = user_data.get("user_id")
     return user_id

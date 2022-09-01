@@ -33,7 +33,7 @@ class BookmarkService:
         return bookmark.inserted_id
 
     async def delete_bookmark(self, bookmark_id: str, user_id: str) -> None:
-        collection = self.db[self.BOOKMARKS_COLLECTION_NAME]
+        collection = self.db[config.MONGO_BOOKMARKS_COLLECTION_NAME]
         await collection.delete_one({"_id": bookmark_id, "user_id": user_id})
 
 

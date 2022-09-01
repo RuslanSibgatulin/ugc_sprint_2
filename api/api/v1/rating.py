@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import APIRouter, Depends, Security
 from models.like import MovieLike, MovieLikeBase, ReviewLike, ReviewLikeBase
 from models.review import ReviewBase, ReviewFull
@@ -21,8 +23,7 @@ async def add_review(
 async def get_reviews(
     movie_id: str,
     event_sender: RatingService = Depends(get_rating_service),
-    user_id: str = Security(get_user),
-) -> list[ReviewFull]:
+) -> List[ReviewFull]:
     reviews = await event_sender.get_reviews(movie_id)
     return reviews
 
@@ -41,7 +42,6 @@ async def add_movie_like(
 async def get_avg_movie_rating(
     movie_id: str,
     event_sender: RatingService = Depends(get_rating_service),
-    user_id: str = Security(get_user),
 ) -> float:
     rating = await event_sender.get_avg_movie_rating(movie_id)
     return rating
