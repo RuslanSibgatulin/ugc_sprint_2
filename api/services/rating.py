@@ -1,6 +1,6 @@
 import logging
 from functools import lru_cache
-from typing import Optional
+from typing import List, Optional
 from uuid import uuid4
 
 from core.config import config
@@ -48,7 +48,7 @@ class RatingService:
         review_dict["_id"] = str(uuid4())
         await collection.insert_one(review_dict)
 
-    async def get_reviews(self, movie_id: str) -> list[ReviewFull]:
+    async def get_reviews(self, movie_id: str) -> List[ReviewFull]:
         collection = self.db[config.MONGO_REVIEWS_COLLECTION_NAME]
         reviews = []
         async for review in collection.find({"movie_id": movie_id}):

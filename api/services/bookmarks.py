@@ -1,6 +1,6 @@
 import logging
 from functools import lru_cache
-from typing import Any
+from typing import Any, List
 from uuid import uuid4
 
 from core.config import config
@@ -17,7 +17,7 @@ class BookmarkService:
         self.mongo = mongo
         self.db = self.mongo[config.MONGO_DB]
 
-    async def get_bookmarks(self, user_id: str) -> list[BookmarkFull]:
+    async def get_bookmarks(self, user_id: str) -> List[BookmarkFull]:
         collection = self.db[config.MONGO_BOOKMARKS_COLLECTION_NAME]
         bookmarks = []
         async for bookmark in collection.find({"user_id": user_id}):
