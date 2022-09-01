@@ -11,7 +11,12 @@ class Config(BaseSettings):
     HASH_ALGORITHM: str = "SHA-256"
     MONGO_HOST: str = "127.0.0.1"
     MONGO_PORT: int = 27017
-    LOGSTASH_HOST: str = 'localhost'
+    MONGO_DB: str = "ugc"
+    MONGO_BOOKMARKS_COLLECTION_NAME = "bookmarks"
+    MONGO_REVIEWS_COLLECTION_NAME = "reviews"
+    MONGO_MOVIE_LIKES_COLLECTION_NAME = "movie_likes"
+    MONGO_REVIEW_LIKES_COLLECTION_NAME = "review_likes"
+    LOGSTASH_HOST: str = "localhost"
     LOGSTASH_PORT: int = 5044
 
     @property
@@ -21,6 +26,14 @@ class Config(BaseSettings):
     @property
     def mongo_uri(self) -> str:
         return f"mongodb://{self.MONGO_HOST}:{self.MONGO_PORT}"
+
+    def get_collections(self) -> List[str]:
+        return [
+            self.MONGO_BOOKMARKS_COLLECTION_NAME,
+            self.MONGO_REVIEWS_COLLECTION_NAME,
+            self.MONGO_MOVIE_LIKES_COLLECTION_NAME,
+            self.MONGO_REVIEW_LIKES_COLLECTION_NAME,
+        ]
 
 
 config = Config()

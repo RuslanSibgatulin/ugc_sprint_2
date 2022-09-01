@@ -1,4 +1,5 @@
 import uvicorn
+from core.logger import LOGGING
 from db import mongo
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
@@ -6,7 +7,6 @@ from fastapi.responses import ORJSONResponse
 from api.v1.bookmark import router as bookmark_router
 from api.v1.progress import router as progress_router
 from api.v1.rating import router as rating_router
-from core.logger import LOGGING
 
 app = FastAPI(
     title="UGC API",
@@ -24,6 +24,7 @@ app.include_router(bookmark_router, prefix="/api/v1")
 async def startup_event():
     # kafka.kafka_handler = await kafka.get_kafka_handler()
     mongo.mongo_client = await mongo.get_mongo()
+    await mongo.init_collections()
 
 
 @app.on_event("shutdown")
