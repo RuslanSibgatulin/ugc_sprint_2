@@ -1,6 +1,6 @@
 import logging
 from functools import lru_cache
-from typing import Optional
+from typing import List, Optional
 from uuid import uuid4
 
 from core.config import config
@@ -31,10 +31,14 @@ class RatingService:
     async def get_avg_movie_rating(self, movie_id: str) -> Optional[float]:
         collection = self.db[config.MONGO_MOVIE_LIKES_COLLECTION_NAME]
         pipeline = [{"$match": {"movie_id": movie_id}}, {"$group": {"_id": "_id", "avg_score": {"$avg": "$score"}}}]
+        results = []
         async for result in collection.aggregate(pipeline):
-            if result:
-                return round(result["avg_score"], 2)
-            return None
+            results.append(result)
+        if results:
+            rating = round(results[0]["avg_score"], 2)
+        else:
+            rating = None
+        return rating
 
     async def add_review(self, review: ReviewFull) -> None:
         rewiew_like = review.like
@@ -44,7 +48,7 @@ class RatingService:
         review_dict["_id"] = str(uuid4())
         await collection.insert_one(review_dict)
 
-    async def get_reviews(self, movie_id: str) -> list[ReviewFull]:
+    async def get_reviews(self, movie_id: str) -> List[ReviewFull]:
         collection = self.db[config.MONGO_REVIEWS_COLLECTION_NAME]
         reviews = []
         async for review in collection.find({"movie_id": movie_id}):
@@ -52,7 +56,7 @@ class RatingService:
         return reviews
 
 
-@lru_cache
+@lru_cache()
 def get_rating_service(
     mongo_storage: AsyncIOMotorClient = Depends(get_mongo_client),
 ) -> RatingService:

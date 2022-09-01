@@ -1,7 +1,8 @@
-from .config import config
+from core.config import config
 
 LOG_DEFAULT_HANDLERS = [
-    "console", "logstash"
+    "console",
+    "logstash",
 ]
 
 
@@ -25,8 +26,8 @@ LOGGING = {
             "fqdn": False,
             "extra_prefix": "dev",
             "extra": {
-                "environment": "production"
-            }
+                "environment": "production",
+            },
         },
     },
     "handlers": {
@@ -64,7 +65,7 @@ LOGGING = {
         },
         "uvicorn.error": {
             "level": "INFO",
-            "handlers": ["logstash"]
+            "handlers": ["logstash"],
         },
         "uvicorn.access": {
             "handlers": ["access"],

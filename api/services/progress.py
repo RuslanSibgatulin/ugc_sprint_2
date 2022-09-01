@@ -20,7 +20,7 @@ class ProgressService:
         await self.storage.send(topic=config.MOVIE_PROGRESS_TOPIC, value=value, key=key)
 
 
-@lru_cache
+@lru_cache()
 def get_progress_service(
     event_storage: KafkaHandler = Depends(get_kafka_handler),
 ) -> ProgressService:

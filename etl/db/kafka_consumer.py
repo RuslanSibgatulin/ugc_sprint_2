@@ -12,15 +12,15 @@ class Consumer:
         self.topic = topic
         self.connect()
 
-    @backoff('Consumer.connect')
+    @backoff("Consumer.connect")
     def connect(self):
         self.consumer = KafkaConsumer(
             self.topic,
             bootstrap_servers=[self.server],
-            auto_offset_reset='earliest',
-            group_id='echo-messages-to-stdout',
-            value_deserializer=lambda v: json.loads(v.decode('utf-8')),
-            key_deserializer=lambda k: k.decode('utf-8')
+            auto_offset_reset="earliest",
+            group_id="echo-messages-to-stdout",
+            value_deserializer=lambda v: json.loads(v.decode("utf-8")),
+            key_deserializer=lambda k: k.decode("utf-8"),
         )
 
     def messages(self, limit: int, timeout: int = 1000) -> Union[List, None]:
@@ -28,7 +28,7 @@ class Consumer:
         while len(msg) < limit:
             records = self.consumer.poll(
                 timeout_ms=timeout,
-                max_records=limit
+                max_records=limit,
             )
             for msg_list in records.values():
                 msg += msg_list

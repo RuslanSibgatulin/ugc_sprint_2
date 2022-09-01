@@ -1,5 +1,3 @@
-from typing import List
-
 from pydantic import BaseSettings, Field
 
 
@@ -12,7 +10,7 @@ class ETLSettings(BaseSettings):
     KAFKA_PORT: int = 9092
 
     @property
-    def kafka_uri(self) -> List[str]:
+    def kafka_uri(self) -> str:
         return f"{self.KAFKA_HOST}:{self.KAFKA_PORT}"
 
 

@@ -12,8 +12,8 @@ def backoff(logger: Logger, start_sleep_time: int = 1, factor: int = 2, border_s
             while True:
                 try:
                     return await func(*args, **kwargs)
-                except Exception as e:
-                    logger.warning(f"Try: {attempt} \n {e}")
+                except Exception as error:
+                    logger.warning(f"Try: {attempt} \n {error}")
                     await sleep(delay)
                     attempt += 1
                     new_time = start_sleep_time * factor
