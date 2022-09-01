@@ -1,6 +1,5 @@
-from pydantic import BaseModel
-
 from models.mixins import CreeateMixin
+from pydantic import BaseModel
 
 
 class BookmarkBase(BaseModel):

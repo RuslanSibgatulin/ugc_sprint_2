@@ -24,8 +24,7 @@ async def get_reviews(
     movie_id: str,
     event_sender: RatingService = Depends(get_rating_service),
 ) -> List[ReviewFull]:
-    reviews = await event_sender.get_reviews(movie_id)
-    return reviews
+    return await event_sender.get_reviews(movie_id)
 
 
 @router.post("/movie-likes")
@@ -43,8 +42,7 @@ async def get_avg_movie_rating(
     movie_id: str,
     event_sender: RatingService = Depends(get_rating_service),
 ) -> float:
-    rating = await event_sender.get_avg_movie_rating(movie_id)
-    return rating
+    return await event_sender.get_avg_movie_rating(movie_id)
 
 
 @router.post("/review-likes")

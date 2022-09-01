@@ -20,7 +20,7 @@ async def get_user(user_credentials: HTTPAuthorizationCredentials = Security(BEA
         raise HTTPException(
             status_code=HTTPStatus.UNAUTHORIZED,
             detail="Invalid jwt token.",
-        )
+        ) from None
     user_data = payload["sub"]
     user_id = user_data.get("user_id")
     return user_id

@@ -1,9 +1,8 @@
 from datetime import datetime
 
-from pydantic.main import BaseModel
-
 from models.like import MovieLike
 from models.mixins import CreeateMixin
+from pydantic.main import BaseModel
 
 
 class ReviewBase(BaseModel):

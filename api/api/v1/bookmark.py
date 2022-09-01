@@ -32,5 +32,4 @@ async def get_bookmarks(
     event_sender: BookmarkService = Depends(get_bookmark_service),
     user_id: str = Security(get_user),
 ) -> List[BookmarkFull]:
-    bookmarks = await event_sender.get_bookmarks(user_id)
-    return bookmarks
+    return await event_sender.get_bookmarks(user_id)

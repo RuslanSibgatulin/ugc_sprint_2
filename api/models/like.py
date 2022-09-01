@@ -1,6 +1,5 @@
-from pydantic.main import BaseModel
-
 from models.mixins import CreeateMixin
+from pydantic.main import BaseModel
 
 
 class MovieLikeBase(BaseModel):
