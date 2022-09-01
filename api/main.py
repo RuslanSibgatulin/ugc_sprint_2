@@ -1,11 +1,12 @@
 import uvicorn
-from db import kafka, mongo
+from db import mongo
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 
 from api.v1.bookmark import router as bookmark_router
 from api.v1.progress import router as progress_router
 from api.v1.rating import router as rating_router
+from core.logger import LOGGING
 
 app = FastAPI(
     title="UGC API",
@@ -32,4 +33,4 @@ async def shutdown_event():
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8080)
+    uvicorn.run("main:app", host="0.0.0.0", port=8080, log_config=LOGGING)

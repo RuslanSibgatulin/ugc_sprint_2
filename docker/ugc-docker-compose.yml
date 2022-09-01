@@ -17,6 +17,8 @@ services:
       context: ..
       dockerfile: docker/dockerfiles/UgcAppDockerfile
     env_file: envs/prod
+    links:
+      - logstash
     depends_on:
       broker:
         condition: service_healthy

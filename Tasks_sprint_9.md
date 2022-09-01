@@ -11,3 +11,5 @@ https://practicum.yandex.ru/learn/middle-python/courses/cb9f2aa3-7bad-4ff4-8385-
 
 # Логирование
 https://practicum.yandex.ru/learn/middle-python/courses/cb9f2aa3-7bad-4ff4-8385-71be33931c93/sprints/40563/topics/02100824-e293-4d78-844c-12a54910b825/lessons/e0f0c9c1-c095-4c81-86f8-dee8cf01daba/
+
+https://python-logstash-async.readthedocs.io/en/stable/

@@ -11,6 +11,8 @@ class Config(BaseSettings):
     HASH_ALGORITHM: str = "SHA-256"
     MONGO_HOST: str = "127.0.0.1"
     MONGO_PORT: int = 27017
+    LOGSTASH_HOST: str = 'localhost'
+    LOGSTASH_PORT: int = 5044
 
     @property
     def kafka_uri(self) -> List[str]:

@@ -19,7 +19,6 @@ services:
       - /tmp/logs/nginx:/var/log/nginx:ro
       - ./deploy/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
     depends_on:
-      - app
       - nginx
       - logstash
       - elasticsearch

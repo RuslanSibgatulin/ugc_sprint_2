@@ -1,5 +1,7 @@
+from .config import config
+
 LOG_DEFAULT_HANDLERS = [
-    "console",
+    "console", "logstash"
 ]
 
 
@@ -16,6 +18,15 @@ LOGGING = {
         "access": {
             "()": "uvicorn.logging.AccessFormatter",
             "fmt": "%(levelprefix)s %(client_addr)s - '%(request_line)s' %(status_code)s",
+        },
+        "logstash": {
+            "()": "logstash_async.formatter.LogstashFormatter",
+            "message_type": "python-logstash",
+            "fqdn": False,
+            "extra_prefix": "dev",
+            "extra": {
+                "environment": "production"
+            }
         },
     },
     "handlers": {
@@ -34,6 +45,17 @@ LOGGING = {
             "class": "logging.StreamHandler",
             "stream": "ext://sys.stdout",
         },
+        "logstash": {
+            "level": "INFO",
+            "class": "logstash_async.handler.AsynchronousLogstashHandler",
+            "formatter": "logstash",
+            "transport": "logstash_async.transport.UdpTransport",
+            "host": config.LOGSTASH_HOST,
+            "port": config.LOGSTASH_PORT,
+            "ssl_enable": False,
+            "ssl_verify": False,
+            "database_path": "./logstash.db",
+        },
     },
     "loggers": {
         "": {
@@ -42,6 +64,7 @@ LOGGING = {
         },
         "uvicorn.error": {
             "level": "INFO",
+            "handlers": ["logstash"]
         },
         "uvicorn.access": {
             "handlers": ["access"],
