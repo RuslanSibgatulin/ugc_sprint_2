@@ -2,7 +2,7 @@ name: UGC app CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "workflow" ]
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
@@ -20,3 +20,19 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.version }}
+      - name: Create reports dir
+        run: |
+          mkdir -p reports/mypy_reports/api
+          mkdir -p reports/mypy_reports/etl
+          mkdir -p reports/flake8_reports/api
+          mkdir -p reports/flake8_reports/etl
+      - name: Install MyPy & flake8
+        run: |
+          pip3 install lxml==4.9.1
+          pip3 install mypy==0.971
+          pip3 install wemake-python-styleguide==0.16.1
+          pip3 install flake8-html
+      - name: Run mypy
+        run: |
+          mypy api --ignore-missing-imports --html-report reports/mypy_reports/api/
+#          mypy etl --html-report reports/mypy_reports/etl/
