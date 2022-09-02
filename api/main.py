@@ -1,20 +1,20 @@
 import uvicorn
+from core.logger import LOGGING
+from core.sentry_fastapi import sentry_init
+from db import kafka, mongo
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 
 from api.v1.bookmark import router as bookmark_router
 from api.v1.progress import router as progress_router
 from api.v1.rating import router as rating_router
-from core.logger import LOGGING
-from core.sentry_fastapi import sentry_init
-from db import kafka, mongo
 
 sentry_init()
 app = FastAPI(
     title="UGC API",
     docs_url="/api/openapi",
     openapi_url="/api/openapi.json",
-    default_response_class=ORJSONResponse
+    default_response_class=ORJSONResponse,
 )
 
 app.include_router(progress_router, prefix="/api/v1")
