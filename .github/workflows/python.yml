@@ -38,8 +38,8 @@ jobs:
           mypy etl --ignore-missing-imports --html-report reports/mypy_reports/etl/
       - name: Run flake8
         run: |
-          flake8 api/ --ignore=WPS,B008 --format=html --htmldir=reports/flake8_reports/api
-          flake8 etl/ --ignore=WPS,B008 --format=html --htmldir=reports/flake8_reports/etl
+          flake8 api/ -v --ignore=WPS,B008 --format=html --htmldir=reports/flake8_reports/api
+          flake8 etl/ -v --ignore=WPS,B008 --format=html --htmldir=reports/flake8_reports/etl
           
 
   send_message:
