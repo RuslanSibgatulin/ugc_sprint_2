@@ -4,8 +4,15 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) и придерживается [Семантического управления версиями](https://semver.org/spec/v2.0.0.html).
 
-## [Неизданное]
-- Регистрация лайков и комментариев
+
+## [1.2.2] - 2022-09-02
+- Добавлен CI [Fedor Kuzminov](https://github.com/Riyce).
+
+## [1.2.1] - 2022-09-01
+- Регистрация лайков и рецензий [Fedor Kuzminov](https://github.com/Riyce).
+
+## [1.1.1] - 2022-08-31
+- Добалены сборщики логов [Ruslan Sibgatulin](https://github.com/RuslanSibgatulin).
 
 ## [1.1.0] - 2022-08-21
 ### Добавлено

@@ -3,7 +3,4 @@ from sentry_sdk.integrations.fastapi import FastApiIntegration
 
 
 def sentry_init():
-    init(
-        integrations=[FastApiIntegration()],
-        traces_sample_rate=1.0
-    )
+    init(integrations=[FastApiIntegration()], traces_sample_rate=1.0)
