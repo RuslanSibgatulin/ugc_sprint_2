@@ -6,3 +6,4 @@ orjson==3.7.12
 pyjwt==2.4.0
 uvicorn==0.18.2
 python-logstash-async==2.5.0
+sentry-sdk[fastapi]
