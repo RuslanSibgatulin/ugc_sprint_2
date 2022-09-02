@@ -14,7 +14,7 @@ app = FastAPI(
     title="UGC API",
     docs_url="/api/openapi",
     openapi_url="/api/openapi.json",
-    default_response_class=ORJSONResponse,
+    default_response_class=ORJSONResponse
 )
 
 app.include_router(progress_router, prefix="/api/v1")
