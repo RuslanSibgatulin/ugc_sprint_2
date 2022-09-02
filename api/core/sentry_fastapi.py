@@ -1,9 +1,9 @@
-import sentry_sdk
+from sentry_sdk import init
 from sentry_sdk.integrations.fastapi import FastApiIntegration
 
 
 def sentry_init():
-    sentry_sdk.init(
+    init(
         integrations=[
             FastApiIntegration(),
         ],

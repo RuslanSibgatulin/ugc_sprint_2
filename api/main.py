@@ -1,14 +1,13 @@
 import uvicorn
-from core.logger import LOGGING
-from db import kafka, mongo
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 
 from api.v1.bookmark import router as bookmark_router
 from api.v1.progress import router as progress_router
 from api.v1.rating import router as rating_router
+from core.logger import LOGGING
 from core.sentry_fastapi import sentry_init
-
+from db import kafka, mongo
 
 sentry_init()
 app = FastAPI(
