@@ -38,8 +38,8 @@ jobs:
           mypy etl --ignore-missing-imports --html-report reports/mypy_reports/etl/
       - name: Run flake8
         run: |
-          flake8 api/ --ignore=WPS,B008 --show-source
-          flake8 etl/ --ignore=WPS,B008 --show-source
+          flake8 api/ --ignore=WPS,B008 --show-source --html-report reports/flake8_reports/api/
+          flake8 etl/ --ignore=WPS,B008 --show-source --html-report reports/flake8_reports/etl/
       
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.0
