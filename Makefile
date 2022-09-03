@@ -7,6 +7,6 @@ help:     ## Show this help.
 		@sed -ne '/@sed/!s/## //p' $(MAKEFILE_LIST)
 
 start:  ## Start project infrastructure.
-		cd docker && DOCKER_BUILDKIT=1 docker-compose $(compose_files) up --build --force-recreate
+		cd docker && DOCKER_BUILDKIT=1 docker-compose $(compose_files) up -d --build --force-recreate
 stop:  ## Stop project.
 		cd docker && docker-compose $(compose_files) down
