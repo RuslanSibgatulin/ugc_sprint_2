@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from models.mixins import CreeateMixin
 from pydantic import BaseModel
 
@@ -8,6 +10,7 @@ class BookmarkBase(BaseModel):
 
 class Bookmark(BookmarkBase, CreeateMixin):
     user_id: str
+    time: datetime
 
 
 class BookmarkFull(Bookmark):
