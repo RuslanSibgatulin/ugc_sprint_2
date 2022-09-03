@@ -40,6 +40,14 @@ jobs:
         run: |
           flake8 api/ --ignore=WPS,B008 --show-source
           flake8 etl/ --ignore=WPS,B008 --show-source
+      
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: UGC CI report
+          path: reports/
+          if-no-files-found: warn
+          retention-days: 0 
           
 
   send_message:
