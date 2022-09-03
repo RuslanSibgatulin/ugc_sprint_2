@@ -64,6 +64,6 @@ jobs:
           Repository: ${{ github.repository }}
           ${{ github.actor }} created commit:
           Commit message: ${{ github.event.commits[0].message }}
-          Tests result: ${{ needs.tests }}
+          Tests result: ${{ needs.tests.result }}
           
           See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
