@@ -35,19 +35,35 @@ jobs:
       - name: Run mypy
         run: |
           mypy api --ignore-missing-imports --html-report reports/mypy_reports/api/
-#          mypy etl --ignore-missing-imports --html-report reports/mypy_reports/etl/
+          mypy etl --ignore-missing-imports --html-report reports/mypy_reports/etl/
       - name: Run flake8
         run: |
-          flake8 api/ --ignore=WPS,B008 --format=html --htmldir=reports/flake8_reports/api
-          flake8 etl/ --ignore=WPS,B008 --format=html --htmldir=reports/flake8_reports/etl
+          flake8 api/ --ignore=WPS,B008 --show-source
+          flake8 etl/ --ignore=WPS,B008,B902 --show-source
+      
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: UGC CI report
+          path: reports/
+          if-no-files-found: warn
+          retention-days: 0 
+          
 
   send_message:
     runs-on: ubuntu-latest
-    needs: tests
+    if: ${{ always() }}
+    needs: [tests]
     steps:
     - name: send message
       uses: appleboy/telegram-action@master
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: ${{ github.workflow }} успешно выполнен!
+        message: |
+          Repository: ${{ github.repository }}
+          ${{ github.actor }} created commit:
+          Commit message: ${{ github.event.commits[0].message }}
+          Tests result: ${{ needs.tests.result }}
+          
+          See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}

@@ -30,6 +30,11 @@
     KAFKA_PORT=29092
     SECRET_KEY=secret
     HASH_ALGORITHM=SHA-256
+    MONGO_HOST=mongos1
+    MONGO_PORT=27019
+    LOGSTASH_HOST=logstash
+    LOGSTASH_PORT=5044
+    SENTRY_DSN=
 
     WEBAPP_WORKERS_PER_CORE=1
     WEBAPP_HOST=0.0.0.0
@@ -48,9 +53,8 @@
 
 
 ## Запуск UGC API и OLAP
-
-    cd docker
-    DOCKER_BUILDKIT=1 docker-compose -f kafka-docker-compose.yml -f ugc-docker-compose.yml -f ch-docker-compose.yml -f elk-docker-compose.yml -f mongo-docker-compose.yml up --build --force-recreate
+Выполнить в терминале
+    make start
 
 ## Документация сервиса регистрации событий UGC доступна по ссылке
 - http://127.0.0.1:8000/api/openapi

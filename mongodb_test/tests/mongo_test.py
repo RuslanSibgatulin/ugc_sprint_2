@@ -7,12 +7,13 @@ pytest.movies_with_likes = []
 pytest.movies_with_review = []
 pytest.users_with_bookmarks = []
 
+pytestmark = pytest.mark.asyncio
+
 
 @pytest.mark.parametrize(
     'limit',
     [100, 1000, 10000]
 )
-@pytest.mark.asyncio
 async def test_insert_movies_likes(mongo_db, users_list, movies_list, limit):
     # Fill likes collection
     pytest.movies_with_likes = random.choices(movies_list, k=limit)
@@ -30,7 +31,6 @@ async def test_insert_movies_likes(mongo_db, users_list, movies_list, limit):
     assert len(result.inserted_ids) == limit
 
 
-@pytest.mark.asyncio
 async def test_insert_review_likes(mongo_db, users_list, movies_list):
     # Fill reviews collection
     fake = Faker()
@@ -74,7 +74,6 @@ async def test_insert_review_likes(mongo_db, users_list, movies_list):
     'limit',
     [100, 1000, 10000]
 )
-@pytest.mark.asyncio
 async def test_insert_bookmarks(mongo_db, users_list, movies_list, limit):
     # Fill bookmarks collection
     pytest.users_with_bookmarks = random.choices(users_list, k=limit)
@@ -97,7 +96,6 @@ async def test_insert_bookmarks(mongo_db, users_list, movies_list, limit):
     'top_limit',
     [10, 100, 1000]
 )
-@pytest.mark.asyncio
 async def test_top_movies(mongo_db, top_limit):
     cursor = mongo_db['likes'].aggregate([
         {"$match": {"rating": {"$gte": 5}, "movie_id": {"$exists": "true"}}},
@@ -109,7 +107,6 @@ async def test_top_movies(mongo_db, top_limit):
     assert len(documents) == top_limit
 
 
-@pytest.mark.asyncio
 async def test_film_ratings(mongo_db, get_random_movie_id):
     cursor = mongo_db['likes'].aggregate([
         {"$match": {"movie_id": get_random_movie_id}},
@@ -148,7 +145,6 @@ async def test_film_ratings(mongo_db, get_random_movie_id):
         ).issubset(document[0])
 
 
-@pytest.mark.asyncio
 async def test_user_bookmarks(mongo_db, get_random_user_id):
     document = await mongo_db['bookmarks'].find_one(
         {"user_id": get_random_user_id}

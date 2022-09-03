@@ -10,7 +10,7 @@ class ViewEvent(BaseModel):
     event_time: int
 
     @root_validator(pre=True)
-    def fill_persent(self, values):
+    def fill_persent(cls, values):
         if "percent" not in values:
             pos, total = values.get("time", 0), values.get("total_time", 0)
             values["percent"] = pos / total * 100

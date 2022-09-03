@@ -1,5 +1,5 @@
 import json
-from typing import List, Union
+from typing import List, NamedTuple, Union
 
 from kafka import KafkaConsumer
 
@@ -24,7 +24,7 @@ class Consumer:
         )
 
     def messages(self, limit: int, timeout: int = 1000) -> Union[List, None]:
-        msg = []
+        msg: List[NamedTuple] = []
         while len(msg) < limit:
             records = self.consumer.poll(
                 timeout_ms=timeout,
