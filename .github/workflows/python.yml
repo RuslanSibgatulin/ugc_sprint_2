@@ -52,7 +52,8 @@ jobs:
 
   send_message:
     runs-on: ubuntu-latest
-    needs: tests
+    if: ${{ always() }}
+    needs: [tests]
     steps:
     - name: send message
       uses: appleboy/telegram-action@master
@@ -63,6 +64,6 @@ jobs:
           Repository: ${{ github.repository }}
           ${{ github.actor }} created commit:
           Commit message: ${{ github.event.commits[0].message }}
-          Tests result: ${{ jobs.tests.result }}
+          Tests result: ${{ needs.tests }}
           
           See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
