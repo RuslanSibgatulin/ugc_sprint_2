@@ -17,9 +17,11 @@ class BookmarkService:
         self.mongo = mongo
         self.db = self.mongo[config.MONGO_DB]
 
-    async def get_bookmarks(self, user_id: str) -> List[BookmarkFull]:
+    async def get_bookmarks(self, limit: int, skip: int, user_id: str) -> List[BookmarkFull]:
         collection = self.db[config.MONGO_BOOKMARKS_COLLECTION_NAME]
         bookmarks = []
+        cursor = collection.find({"user_id": user_id})
+        cursor.sort("time", -1).skip(skip).limit(limit)
         async for bookmark in collection.find({"user_id": user_id}):
             bookmark["id"] = bookmark.pop("_id")
             bookmarks.append(BookmarkFull(**bookmark))
