@@ -53,9 +53,8 @@
 
 
 ## Запуск UGC API и OLAP
-
-    cd docker
-    DOCKER_BUILDKIT=1 docker-compose -f kafka-docker-compose.yml -f ugc-docker-compose.yml -f ch-docker-compose.yml -f elk-docker-compose.yml -f mongo-docker-compose.yml up --build --force-recreate
+Выполнить в терминале
+    make start
 
 ## Документация сервиса регистрации событий UGC доступна по ссылке
 - http://127.0.0.1:8000/api/openapi
