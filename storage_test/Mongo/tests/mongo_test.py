@@ -3,39 +3,43 @@ import random
 import pytest
 from faker import Faker
 
-pytest.movies_with_likes = []
-pytest.movies_with_review = []
-pytest.users_with_bookmarks = []
+pytestmark = pytest.mark.asyncio
 
 pytestmark = pytest.mark.asyncio
 
 
 @pytest.mark.parametrize(
     'limit',
-    [100, 1000, 10000]
+    [10000, 100000, 1000000]
 )
 async def test_insert_movies_likes(mongo_db, users_list, movies_list, limit):
-    # Fill likes collection
-    pytest.movies_with_likes = random.choices(movies_list, k=limit)
-    result = await mongo_db['likes'].insert_many(
-        [
-            {
-                'movie_id': movie,
-                'user_id': random.choice(users_list),
-                'rating': random.randrange(0, 10)
+    print(f'Fill likes collection. {limit} docs. ', end='\n')
+    n = 0
+    while n < limit:
+        movies_with_likes = random.choices(movies_list, k=1000)
+        result = await mongo_db['likes'].insert_many(
+            [
+                {
+                    'movie_id': movie,
+                    'user_id': random.choice(users_list),
+                    'rating': random.randrange(0, 10)
 
-            } for movie in pytest.movies_with_likes
-        ]
-    )
+                } for movie in movies_with_likes
+            ]
+        )
+        n += len(result.inserted_ids)
+        percent = int(n / limit * 100)
+        print(f'\r\tInserted docs | {n} | {percent}%', end="\r")
+
     # Проверка результата
-    assert len(result.inserted_ids) == limit
+    assert n == limit
 
 
 async def test_insert_review_likes(mongo_db, users_list, movies_list):
     # Fill reviews collection
     fake = Faker()
-    pytest.movies_with_review = random.choices(
-        movies_list, k=len(movies_list)//10
+    movies_with_review = random.choices(
+        movies_list, k=len(movies_list) // 10
     )
     result = await mongo_db['reviews'].insert_many(
         [
@@ -49,10 +53,10 @@ async def test_insert_review_likes(mongo_db, users_list, movies_list):
                 'rating': random.randrange(0, 11),
                 'text': fake.text()
 
-            } for movie in pytest.movies_with_review
+            } for movie in movies_with_review
         ]
     )
-    assert len(result.inserted_ids) == len(movies_list)//10
+    assert len(result.inserted_ids) == len(movies_list) // 10
 
     # Fill review likes
     reviews_ids = result.inserted_ids
@@ -63,11 +67,11 @@ async def test_insert_review_likes(mongo_db, users_list, movies_list):
                 'user_id': random.choice(users_list),
                 'rating': random.randrange(0, 11)
 
-            } for review in random.choices(reviews_ids, k=len(reviews_ids)//2)
+            } for review in random.choices(reviews_ids, k=len(reviews_ids) // 2)
         ]
     )
 
-    assert len(result.inserted_ids) == len(reviews_ids)//2
+    assert len(result.inserted_ids) == len(reviews_ids) // 2
 
 
 @pytest.mark.parametrize(
@@ -76,7 +80,7 @@ async def test_insert_review_likes(mongo_db, users_list, movies_list):
 )
 async def test_insert_bookmarks(mongo_db, users_list, movies_list, limit):
     # Fill bookmarks collection
-    pytest.users_with_bookmarks = random.choices(users_list, k=limit)
+    users_with_bookmarks = random.choices(users_list, k=limit)
     result = await mongo_db['bookmarks'].insert_many(
         [
             {
@@ -85,7 +89,7 @@ async def test_insert_bookmarks(mongo_db, users_list, movies_list, limit):
                     movies_list,
                     k=random.randrange(3, 10)
                 )
-            } for user in pytest.users_with_bookmarks
+            } for user in users_with_bookmarks
         ]
     )
 
@@ -141,8 +145,8 @@ async def test_film_ratings(mongo_db, get_random_movie_id):
             'dislikes_count',
             'avg_rating',
             'rate_count'
-            ]
-        ).issubset(document[0])
+        ]
+    ).issubset(document[0])
 
 
 async def test_user_bookmarks(mongo_db, get_random_user_id):
